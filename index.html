@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ffd6e8,#ffc2d1);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* ❤️ hearts */
+.heart{
+  position:absolute;
+  color:rgba(255,77,109,0.6);
+  animation:float 6s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* 💌 card */
+.card{
+  background:#ffeaf2;
+  width:340px;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  position:relative;
+  z-index:5;
+  max-height:85vh;
+  overflow-y:auto;
+}
+
+.sticker{
+  width:100px;
+  margin-bottom:15px;
+}
+
+h1{
+  color:#000;
+  font-size:18px;
+  margin-bottom:15px;
+  white-space:pre-line;
+}
+
+.subtext{
+  font-size:14px;
+  color:#b8860b;
+  margin-bottom:20px;
+}
+
+button{
+  border:none;
+  border-radius:30px;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.3s;
+  margin:6px auto;
+  padding:12px 20px;
+  width:90%;
+  display:block;
+}
+
+#yes{ background:#ff4d6d; color:white; }
+#no{ background:#6c63ff; color:white; }
+#nextBtn{ background:#ff9f1c; color:white; display:none; }
+#okayBtn{ background:#2ec4b6; color:white; display:none; }
+#finalBtn{ background:#e63946; color:white; display:none; }
+
+/* QUIZ STYLE */
+.quiz-container{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+.quiz-title{
+  font-size:26px;
+  color:#7a1c3d;
+  margin-bottom:15px;
+}
+
+.quiz-box{
+  background:#fff0f5;
+  padding:20px;
+  border-radius:20px;
+  width:300px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.quiz-box p{
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.quiz-option{
+  background:#ffffff;
+  margin:8px 0;
+  padding:10px;
+  border-radius:20px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.quiz-option:hover{
+  background:#ff4d6d;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="mainCard">
+  <img id="sticker" class="sticker" src="https://iili.io/fykQA9s.jpg">
+
+  <h1 id="text">Will you be my Valentine? 💖</h1>
+
+  <p class="subtext">
+    I don’t want forever alone — I want every second with you.
+  </p>
+
+  <button id="yes">YES</button>
+  <button id="no">NO</button>
+  <button id="nextBtn">NEXT 💌</button>
+  <button id="okayBtn">OKAY 💛</button>
+  <button id="finalBtn">FINAL SLIDE 💖</button>
+</div>
+
+<!-- QUIZ PAGE -->
+<div class="quiz-container" id="quizPage">
+  <div class="quiz-title">Quiz for you 😘</div>
+
+  <div class="quiz-box">
+    <p>Who is the absolute ‘Boss’ in this relationship 🥰?</p>
+
+    <div class="quiz-option" onclick="showFinal()">Me(Krishna baby 🤭🫶🏻)</div>
+    <div class="quiz-option" onclick="showFinal()">Me(krishna baby 🤪💗)</div>
+    <div class="quiz-option" onclick="showFinal()">Option 1 & 2</div>
+  </div>
+</div>
+
+<script>
+
+/* floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*20+15+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+
+let step=0;
+let noScale=1;
+
+const data=[
+  {t:"Will you be my Valentine? 💖",i:"https://i.imgur.com/9o7Pz3G.png"},
+  {t:"Think again 😭",i:"https://iili.io/fykeZsj.png"},
+  {t:"Are you sure? 😡",i:"https://iili.io/fykvG8N.md.jpg"},
+  {t:"See this 😏 abb to yess krna padega cutiee",i:"https://iili.io/fyk865N.th.jpg"}
+];
+
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+const text=document.getElementById("text");
+const sticker=document.getElementById("sticker");
+const nextBtn=document.getElementById("nextBtn");
+const okayBtn=document.getElementById("okayBtn");
+const finalBtn=document.getElementById("finalBtn");
+const mainCard=document.getElementById("mainCard");
+const quizPage=document.getElementById("quizPage");
+const subtext=document.querySelector(".subtext"); // ✅ Subtext reference
+
+no.onclick=()=>{
+  step++;
+  if(step<data.length){
+    text.innerText=data[step].t;
+    sticker.src=data[step].i;
+  }
+
+  noScale-=0.2;
+  if(noScale>0){
+    no.style.transform="scale("+noScale+")";
+  }
+
+  if(step===data.length-1){
+    no.style.display="none";
+  }
+};
+
+yes.onclick=()=>{
+  text.innerText="YAYYY!! ❤️ I knew it 🤭";
+  sticker.src="https://iili.io/fyvHwxe.th.jpg";
+
+  subtext.style.display="none"; // ✅ hide after first slide
+
+  yes.style.display="none";
+  no.style.display="none";
+  nextBtn.style.display="block";
+};
+
+nextBtn.onclick=()=>{
+  text.innerText="I have something for you but answer my question before that 💌";
+  nextBtn.style.display="none";
+  okayBtn.style.display="block";
+};
+
+okayBtn.onclick=()=>{
+  mainCard.style.display="none";
+  quizPage.style.display="flex";
+};
+
+function showFinal(){
+  quizPage.style.display="none";
+  mainCard.style.display="block";
+
+  subtext.style.display="none";  // ✅ hide for final slides
+
+  text.innerText="Hehehe🤭🤪 meri cutu🥹❤️ aale aale tension na lo apke liye mene kuch likha hai final slide pr click kro 💌";
+  sticker.src="https://iili.io/fyvjrzb.md.jpg";
+
+  okayBtn.style.display="none";  // ✅ OKAY button hidden
+  finalBtn.style.display="block";
+}
+
+finalBtn.onclick=()=>{
+  text.innerText=`Aaj mai jayda kuch nhi bolunga bss thoda sa bolna chahunga 💌
+
+Meri bachiii aap kbhi yeh mt socha kro ki tum mujhe utna pyaar nahi de paati jitna main deta hoon… par sach me mujhe kabhi aisa feel hi nahi hota.
+
+Tumhara har chhota message, har care, har ‘khayal rakhna’ mere liye duniya jaisa hota hai. Na jaane kitni special cheezein tumne mere liye ki hain, jinse saaf saaf pata chalta hai ki tum mujhse kitna pyaar karti ho.
+
+Kabhi kabhi meri aankhein bhi bhar jaati hain yeh soch kar ki mujhe itna sachcha aur gehra pyaar mil raha hai — itna pyaar jitna maine kabhi socha bhi nahi tha ki mujhe apni life me milega.
+
+Sach to yeh hai ki humein khud kabhi pata nahi chalta ki hum saamne wale ko kitna pyaar de rahe hote hain… lekin jis insaan ko woh pyaar mil raha hota hai, use sab mehsoos hota hai.
+
+Isliye main tumhe sach bata raha hoon baby — tum mujhe bahut saara pyaar de rahi ho, shayad jitna main words me properly express bhi nahi kar pata. 🥺
+
+Pyaar competition nahi hota, na hi uska koi scale hota hai. Tum apne andaaz me pyaar karti ho, aur wahi andaaz mere liye sabse khoobsurat hai.
+
+Mujhe tumse zyada ya kam nahi chahiye… mujhe bas tum chahiye — jaisi tum ho, waise hi. Tum mere liye bilkul perfect ho. 💖✨
+
+Happy Valentine's Day bachaa 🥹🫂💞  
+I LOVEEE YOUU ALWAYS AND FOREVER ♾️🧿❤️`;
+
+  finalBtn.style.display="none";
+};
+
+</script>
+
+</body>
+</html>
+    
+  </body>
+  
+</html>
